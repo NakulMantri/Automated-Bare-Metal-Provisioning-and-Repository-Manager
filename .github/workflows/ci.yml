@@ -44,4 +44,9 @@ jobs:
     - name: Execute automated unit test suite (Pytest)
       env:
         PYTHONPATH: src
-      run: pytest
+      run: |
+        pytest -vv > pytest_output.log 2>&1 || {
+          cat pytest_output.log
+          python scripts/post_failure_comment.py "${{ github.repository }}" "${{ github.sha }}" "${{ secrets.GITHUB_TOKEN }}"
+          exit 1
+        }
