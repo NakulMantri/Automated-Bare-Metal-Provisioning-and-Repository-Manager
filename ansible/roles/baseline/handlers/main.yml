@@ -1,0 +1,7 @@
+---
+# Handlers for baseline role
+
+- name: Apply sysctl settings
+  ansible.builtin.command:
+    cmd: sysctl --system
+  changed_when: true

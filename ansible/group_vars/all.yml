@@ -1,0 +1,50 @@
+---
+# Global parameters and provisioning baseline configuration values
+
+# Network / System configuration
+ntp_servers:
+  - 0.pool.ntp.org
+  - 1.pool.ntp.org
+dns_servers:
+  - 1.1.1.1
+  - 8.8.8.8
+timezone: "UTC"
+
+# Core packages required on all systems
+baseline_packages:
+  - curl
+  - wget
+  - vim
+  - git
+  - tar
+  - unzip
+  - net-tools
+  - htop
+  - chrony
+  - firewalld
+
+# Security Hardening configs
+sysctl_settings:
+  net.ipv4.ip_forward: 0
+  net.ipv4.conf.all.send_redirects: 0
+  net.ipv4.conf.default.send_redirects: 0
+  net.ipv4.conf.all.accept_source_route: 0
+  net.ipv4.conf.default.accept_source_route: 0
+  net.ipv4.conf.all.accept_redirects: 0
+  net.ipv4.conf.default.accept_redirects: 0
+  net.ipv4.conf.all.secure_redirects: 0
+  net.ipv4.conf.default.secure_redirects: 0
+  net.ipv4.tcp_syncookies: 1
+  net.ipv4.tcp_rfc1337: 1
+
+# Administrator deployment
+admin_group: "wheel"
+admin_users:
+  - username: "provisioner"
+    ssh_key: "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC49jV... dummy-key"
+
+# Repository Manager Client configuration
+repo_server_url: "http://10.0.10.50:8000"
+custom_repo_name: "custom-internal"
+custom_repo_description: "Custom Internal Infrastructure Repository"
+custom_repo_gpg_key: "http://10.0.10.50:8000/repo/RPM-GPG-KEY-custom-internal"

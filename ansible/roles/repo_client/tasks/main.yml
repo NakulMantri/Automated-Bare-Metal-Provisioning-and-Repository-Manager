@@ -1,0 +1,16 @@
+---
+# Repository client setup tasks for target bare-metal hosts
+
+- name: Create Custom YUM/DNF repository configuration
+  ansible.builtin.template:
+    src: custom_repo.repo.j2
+    dest: "/etc/yum.repos.d/{{ custom_repo_name }}.repo"
+    owner: root
+    group: root
+    mode: '0644'
+
+- name: Import RPM repository GPG Signing Key
+  ansible.builtin.rpm_key:
+    key: "{{ custom_repo_gpg_key }}"
+    state: present
+  ignore_errors: true # In case the repo server is offline during initial provisioning

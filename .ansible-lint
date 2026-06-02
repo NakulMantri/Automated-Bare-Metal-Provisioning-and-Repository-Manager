@@ -1,0 +1,19 @@
+# Ansible-lint Configuration File
+
+# Exclude paths from checking
+exclude_paths:
+  - .github/
+  - repo/
+  - rpmbuild/
+  - src/
+  - tests/
+
+# Opt-in to extra rules
+enable_list:
+  - empty-string-compare
+  - no-same-owner
+
+# Define standards rules skip (only non-critical ones if needed)
+skip_list:
+  - yaml[line-length]  # Allow longer template lines
+  - playbooks[tag]     # Don't require tags in baseline tasks

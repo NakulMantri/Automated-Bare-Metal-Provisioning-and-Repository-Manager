@@ -1,0 +1,10 @@
+---
+# Site Playbook to configure Bare-Metal server baselines and target repositories
+
+- name: Apply Baseline OS and Security configurations to Bare-Metal Servers
+  hosts: bare_metal_servers
+  gather_facts: true
+  roles:
+    - role: baseline
+    - role: security
+    - role: repo_client

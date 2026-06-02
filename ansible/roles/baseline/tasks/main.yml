@@ -1,0 +1,42 @@
+---
+# Baseline configuration tasks for Bare-Metal provisioning
+
+- name: Set system timezone to {{ timezone }}
+  community.general.timezone:
+    name: "{{ timezone }}"
+
+- name: Install baseline operating system packages
+  ansible.builtin.package:
+    name: "{{ baseline_packages }}"
+    state: present
+
+- name: Ensure Chrony configuration is running
+  ansible.builtin.service:
+    name: chronyd
+    state: started
+    enabled: true
+
+- name: Setup sysctl kernel hardening parameters
+  ansible.builtin.template:
+    src: sysctl.conf.j2
+    dest: /etc/sysctl.d/99-hardening.conf
+    owner: root
+    group: root
+    mode: '0644'
+  notify: Apply sysctl settings
+
+- name: Ensure admin SSH users exist
+  ansible.builtin.user:
+    name: "{{ item.username }}"
+    group: "{{ admin_group }}"
+    shell: /bin/bash
+    create_home: true
+    state: present
+  loop: "{{ admin_users }}"
+
+- name: Deploy SSH public keys for administrators
+  ansible.builtin.authorized_key:
+    user: "{{ item.username }}"
+    key: "{{ item.ssh_key }}"
+    state: present
+  loop: "{{ admin_users }}"

@@ -1,0 +1,34 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+.eggs/
+build/
+dist/
+*.egg-info/
+
+# Local Build Directories & Generated Repositories
+rpmbuild/BUILD/
+rpmbuild/BUILDROOT/
+rpmbuild/RPMS/
+rpmbuild/SOURCES/
+rpmbuild/SPECS/*
+!rpmbuild/SPECS/.gitkeep
+gpg_batch_config
+
+# Exclude generated RPMs and repodata
+repo/x86_64/*
+!repo/x86_64/.gitkeep
+repo/RPM-GPG-KEY-*
+
+# Virtual Environments
+.venv/
+venv/
+ENV/
+auto/
+
+# OS/IDE
+.DS_Store
+.vscode/
+.idea/
